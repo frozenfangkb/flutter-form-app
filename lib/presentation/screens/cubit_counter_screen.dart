@@ -19,13 +19,15 @@ class _CubitCounterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counterState = context.watch<CounterCubit>().state;
     final increaseCounter = context.read<CounterCubit>().increaseBy;
     final resetCounter = context.read<CounterCubit>().reset;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cubit Counter: ${counterState.transactionCount}'),
+        title: context.select(
+          (CounterCubit value) =>
+              Text('Cubit Counter: ${value.state.transactionCount}'),
+        ),
         actions: [
           IconButton(
             onPressed: () => resetCounter(),
